@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"strings"
 	"testing"
 
@@ -18,11 +19,16 @@ func TestClient(t *testing.T) {
 	clientID := "some_client_id"
 	clientSecret := "some_client_secret"
 	scopes := "scope1,scope2"
+	audience := "http://api.example.com"
 
 	token := "03807cb390319329bdf6c777d4dfae9c0d3b3c35"
 	okidoki := "Hello, client"
 
-	expectedBody := fmt.Sprintf("client_id=%s&grant_type=client_credentials&scope=%s", clientID, strings.Replace(scopes, ",", "+", -1))
+	expectedValues := url.Values{
+		"audience":   {audience},
+		"grant_type": {"client_credentials"},
+	}
+	expectedBody := fmt.Sprintf("%s&scope=%s", expectedValues.Encode(), strings.Replace(scopes, ",", "+", -1))
 	tokenServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded" {
 			t.Error("unexpected content type:", r.Header.Get("Content-Type"))
@@ -58,8 +64,9 @@ func TestClient(t *testing.T) {
 			t.Error("unexpected body! have:", string(body), "want:", expectedBody)
 			return
 		}
+
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprintf(w, `{"access_token":"%s","expires_in":3600,"token_type":"bearer","scope":null}`, token)
+		fmt.Fprintf(w, `{"access_token":"%s","expires_in":3600,"token_type":"bearer"}`, token)
 	}))
 	defer tokenServer.Close()
 
@@ -79,6 +86,9 @@ func TestClient(t *testing.T) {
 				"client_secret": clientSecret,
 				"token_url":     tokenServer.URL,
 				"scopes":        scopes,
+				"endpoint_params": map[string]interface{}{
+					"audience": []interface{}{audience},
+				},
 			},
 		},
 	})
