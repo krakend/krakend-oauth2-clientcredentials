@@ -8,7 +8,7 @@ import (
 	"golang.org/x/oauth2/clientcredentials"
 
 	"github.com/devopsfaith/krakend/config"
-	"github.com/devopsfaith/krakend/proxy"
+	"github.com/devopsfaith/krakend/transport/http/client"
 )
 
 // Namespace is the key to use to store and access the custom config data
@@ -16,10 +16,10 @@ const Namespace = "github.com/devopsfaith/krakend-oauth2-clientcredentials"
 
 // NewHTTPClient creates a HTTPClientFactory with an http client configured for dealing
 // with all the logic related to the oauth2 client credentials grant
-func NewHTTPClient(cfg *config.Backend) proxy.HTTPClientFactory {
+func NewHTTPClient(cfg *config.Backend) client.HTTPClientFactory {
 	oauth, ok := configGetter(cfg.ExtraConfig).(Config)
 	if !ok || oauth.IsDisabled {
-		return proxy.NewHTTPClient
+		return client.NewHTTPClient
 	}
 	c := clientcredentials.Config{
 		ClientID:       oauth.ClientID,
