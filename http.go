@@ -28,8 +28,9 @@ func NewHTTPClient(cfg *config.Backend) client.HTTPClientFactory {
 		Scopes:         strings.Split(oauth.Scopes, ","),
 		EndpointParams: oauth.EndpointParams,
 	}
-	return func(ctx context.Context) *http.Client {
-		return c.Client(ctx)
+	cli := c.Client(context.Background())
+	return func(_ context.Context) *http.Client {
+		return cli
 	}
 }
 
