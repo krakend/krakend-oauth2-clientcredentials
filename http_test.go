@@ -10,6 +10,7 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"strings"
+	"sync/atomic"
 	"testing"
 
 	"github.com/devopsfaith/krakend/config"
@@ -28,8 +29,14 @@ func TestClient(t *testing.T) {
 		"audience":   {audience},
 		"grant_type": {"client_credentials"},
 	}
+	var tokenIssued atomic.Value
+	tokenIssued.Store(false)
 	expectedBody := fmt.Sprintf("%s&scope=%s", expectedValues.Encode(), strings.Replace(scopes, ",", "+", -1))
 	tokenServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if tokenIssued.Load().(bool) {
+			t.Error("token issuer was asked for more than a single token")
+			return
+		}
 		if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded" {
 			t.Error("unexpected content type:", r.Header.Get("Content-Type"))
 			return
@@ -67,6 +74,7 @@ func TestClient(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprintf(w, `{"access_token":"%s","expires_in":3600,"token_type":"bearer"}`, token)
+		tokenIssued.Store(true)
 	}))
 	defer tokenServer.Close()
 
@@ -94,20 +102,22 @@ func TestClient(t *testing.T) {
 	})
 	client := c(context.Background())
 
-	resp, err := client.Get(ts.URL)
-	if err != nil {
-		log.Println(err)
-		t.Error(err)
-		return
-	}
-	response, err := ioutil.ReadAll(resp.Body)
-	resp.Body.Close()
-	if err != nil {
-		log.Println(err)
-		t.Error(err)
-		return
-	}
-	if string(response) != okidoki {
-		t.Error("unexpected body:", string(response))
+	for i := 0; i < 5; i++ {
+		resp, err := client.Get(ts.URL)
+		if err != nil {
+			log.Println(err)
+			t.Error(err)
+			return
+		}
+		response, err := ioutil.ReadAll(resp.Body)
+		resp.Body.Close()
+		if err != nil {
+			log.Println(err)
+			t.Error(err)
+			return
+		}
+		if string(response) != okidoki {
+			t.Error("unexpected body:", string(response))
+		}
 	}
 }
