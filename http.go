@@ -7,8 +7,8 @@ import (
 
 	"golang.org/x/oauth2/clientcredentials"
 
-	"github.com/luraproject/lura/config"
-	"github.com/luraproject/lura/transport/http/client"
+	"github.com/luraproject/lura/v2/config"
+	"github.com/luraproject/lura/v2/transport/http/client"
 )
 
 // Namespace is the key to use to store and access the custom config data
