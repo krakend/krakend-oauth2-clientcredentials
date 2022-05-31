@@ -1,4 +1,4 @@
-module github.com/devopsfaith/krakend-oauth2-clientcredentials/v2
+module github.com/krakendio/krakend-oauth2-clientcredentials/v2
 
 go 1.17
 
