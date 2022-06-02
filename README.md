@@ -11,7 +11,7 @@ This package exposes single factory capable to create a instances of the `proxy.
 		"net/http"
 		"github.com/luraproject/lura/config"
 		"github.com/luraproject/lura/proxy"
-		"github.com/devopsfaith/krakend-oauth2-clientcredentials"
+		"github.com/krakendio/krakend-oauth2-clientcredentials"
 	)
 
 	requestExecutorFactory := func(cfg *config.Backend) proxy.HTTPRequestExecutor {
@@ -21,4 +21,4 @@ This package exposes single factory capable to create a instances of the `proxy.
 		}
 	}
 
-You can create your own `proxy.HTTPRequestExecutor` and inject it into your `BackendFactory` 
+You can create your own `proxy.HTTPRequestExecutor` and inject it into your `BackendFactory`
