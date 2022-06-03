@@ -31,7 +31,7 @@ func TestClient(t *testing.T) {
 	}
 	var tokenIssued atomic.Value
 	tokenIssued.Store(false)
-	expectedBody := fmt.Sprintf("%s&scope=%s", expectedValues.Encode(), strings.Replace(scopes, ",", "+", -1))
+	expectedBody := fmt.Sprintf("%s&scope=%s", expectedValues.Encode(), strings.ReplaceAll(scopes, ",", "+"))
 	tokenServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if tokenIssued.Load().(bool) {
 			t.Error("token issuer was asked for more than a single token")
