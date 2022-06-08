@@ -110,6 +110,8 @@ github.com/luraproject/lura/v2 v2.0.0-20220601150625-abb94fb9730d h1:XmVeK0wbQ/c
 github.com/luraproject/lura/v2 v2.0.0-20220601150625-abb94fb9730d/go.mod h1:M13cN+J+5/pXZx46zZVT9h+36kPPvcFA/Jcuk45xSZw=
 github.com/luraproject/lura/v2 v2.0.0 h1:nfIr4a8XLMECaPQBpGSWxXhNAya7JQwGa3kzLRy5z14=
 github.com/luraproject/lura/v2 v2.0.0/go.mod h1:1FhL+5a9uH6o7zMNstXlcjznL5yt2lZ9Q8efanmvw9w=
+github.com/luraproject/lura/v2 v2.0.5 h1:Mc4uj37s7mv6qRLy+Uo983CiaITPSVJYooeUilbiD+k=
+github.com/luraproject/lura/v2 v2.0.5/go.mod h1:r2N4j89Snm1j+Y9CCa9cYR1T2ETRL0E4y9P+DgymqX4=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
