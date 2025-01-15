@@ -11,5 +11,5 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	golang.org/x/net v0.33.0 // indirect
 	google.golang.org/appengine v1.6.6 // indirect
-	google.golang.org/protobuf v1.27.1 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 )
