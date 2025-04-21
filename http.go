@@ -88,7 +88,7 @@ func configGetter(e config.ExtraConfig) interface{} {
 		cfg.EndpointParams = res
 	}
 	if v, ok := tmp["auth_style"]; ok {
-		cfg.AuthStyle = v.(int)
+		cfg.AuthStyle = int(v.(float64))
 	}
 	return cfg
 }
