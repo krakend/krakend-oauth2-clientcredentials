@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strings"
 
+	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
 
 	"github.com/luraproject/lura/v2/config"
@@ -27,6 +28,7 @@ func NewHTTPClient(cfg *config.Backend) client.HTTPClientFactory {
 		TokenURL:       oauth.TokenURL,
 		Scopes:         strings.Split(oauth.Scopes, ","),
 		EndpointParams: oauth.EndpointParams,
+		AuthStyle:      oauth2.AuthStyle(oauth.AuthStyle),
 	}
 	cli := c.Client(context.Background())
 	return func(_ context.Context) *http.Client {
@@ -42,6 +44,7 @@ type Config struct {
 	TokenURL       string
 	Scopes         string
 	EndpointParams map[string][]string
+	AuthStyle      int
 }
 
 // ZeroCfg is the zero value for the Config struct
@@ -83,6 +86,9 @@ func configGetter(e config.ExtraConfig) interface{} {
 			res[k] = values
 		}
 		cfg.EndpointParams = res
+	}
+	if v, ok := tmp["auth_style"]; ok {
+		cfg.AuthStyle = v.(int)
 	}
 	return cfg
 }
