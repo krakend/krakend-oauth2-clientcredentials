@@ -1,6 +1,6 @@
 # KrakenD oauth2 client credentials
 
-A http client for the [KrakenD](https://github.com/devopsfaith/krakend) framework supporting the oauth2 client credentials workflow.
+A http client for the [KrakenD](https://github.com/luraproject/lura) framework supporting the oauth2 client credentials workflow.
 
 ## How to use it?
 
@@ -9,9 +9,9 @@ This package exposes single factory capable to create a instances of the `proxy.
 	import 	(
 		"context"
 		"net/http"
-		"github.com/luraproject/lura/v2/config"
-		"github.com/luraproject/lura/v2/proxy"
-		"github.com/krakend/krakend-oauth2-clientcredentials/v2"
+		"github.com/luraproject/lura/v3/config"
+		"github.com/luraproject/lura/v3/proxy"
+		"github.com/krakend/krakend-oauth2-clientcredentials/v3"
 	)
 
 	requestExecutorFactory := func(cfg *config.Backend) proxy.HTTPRequestExecutor {

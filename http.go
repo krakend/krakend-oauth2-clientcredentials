@@ -7,12 +7,12 @@ import (
 
 	"golang.org/x/oauth2/clientcredentials"
 
-	"github.com/luraproject/lura/v2/config"
-	"github.com/luraproject/lura/v2/transport/http/client"
+	"github.com/luraproject/lura/v3/config"
+	"github.com/luraproject/lura/v3/transport/http/client"
 )
 
 // Namespace is the key to use to store and access the custom config data
-const Namespace = "github.com/devopsfaith/krakend-oauth2-clientcredentials"
+const Namespace = "auth/client-credentials"
 
 // NewHTTPClient creates a HTTPClientFactory with an http client configured for dealing
 // with all the logic related to the oauth2 client credentials grant
